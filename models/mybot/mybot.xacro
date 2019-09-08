@@ -18,9 +18,9 @@
 
 <xacro:property name="cameraSize" value="0.05"/>
 <xacro:property name="cameraMass" value="0.1"/>
-<xacro:include filename="$(find gazebo_models)/models/xacro/mybot.gazebo" />
-<xacro:include filename="$(find gazebo_models)/models/xacro/materials.xacro" />
-<xacro:include filename="$(find gazebo_models)/models/xacro/macros.xacro" />
+<xacro:include filename="$(find gazebo_models)/models/mybot/mybot.gazebo" />
+<xacro:include filename="$(find gazebo_models)/models/mybot/materials.xacro" />
+<xacro:include filename="$(find gazebo_models)/models/mybot/macros.xacro" />
 <link name="mybot_link" />
 
 <joint name="base_joint" type="fixed">
@@ -150,31 +150,45 @@
 </joint>
 
 
-
+<transmission name="right_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="mybot_right_wheel_hinge">
+  <hardwareInterface>EffortJointInterface</hardwareInterface>
+   </joint>
+  <actuator name="rightMotor">
+    <hardwareInterface>EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
 
 
  <!-- Camera -->
   <link name="camera_link">
     <collision>
-      <origin xyz="0.085 0 0.085" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <box size="0.05 0.05 0.05"/>
       </geometry>
     </collision>
     <visual>
-      <origin xyz="0.085 0 0.085" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <!--<mesh filename="package://gazebo_models/camera.dae" />-->
-	<box size="0.05 0.05 0.05"/>
+	    <box size="0.05 0.05 0.05"/>
       </geometry>
     </visual>
+    <inertial> 
+      <mass value="0.1"/> 
+      <box_inertia m="0.1" x="0.05" y="0.05" z="0.05"/>
+    </inertial>
   </link>
 
-  <joint name="camera_joint" type="fixed">
-    <axis xyz="0 1 0" />
-    <origin xyz="0.085 0 0.085" rpy="0 0 0"/>
+  <joint name="camera_joint" type="continuous">
+    <axis xyz="0 0 1" />
+    <origin xyz="0.1 0 ${wheelRadius+chassisHeight/2+0.025}" rpy="0 0 0"/>
     <parent link="mybot_chassis"/>
     <child link="camera_link"/>
+    <limit lower="-${PI/2}" upper="${PI/2}" effort="10" velocity="3"/>
   </joint>
 
   <!-- generate an optical frame http://www.ros.org/reps/rep-0103.html#suffix-frames
@@ -189,15 +203,13 @@
 
   <link name="camera_link_optical">
   </link>
-
-
-
-<transmission name="right_trans">
+  
+<transmission name="camera_trans">
   <type>transmission_interface/SimpleTransmission</type>
-  <joint name="mybot_right_wheel_hinge">
-  <hardwareInterface>EffortJointInterface</hardwareInterface>
-   </joint>
-  <actuator name="rightMotor">
+  <joint name="camera_joint">
+    <hardwareInterface>EffortJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="cameraMotor">
     <hardwareInterface>EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>

@@ -14,3 +14,7 @@ mybot:
     type: effort_controllers/JointEffortController
     joint: mybot_right_wheel_hinge
     pid: {p: 100.0, i: 0.1, d: 10.0}
+  camera_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: camera_joint
+    pid: {p: 100.0, i: 0.1, d: 10.0}
