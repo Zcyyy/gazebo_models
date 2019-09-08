@@ -207,10 +207,9 @@
 <transmission name="camera_trans">
   <type>transmission_interface/SimpleTransmission</type>
   <joint name="camera_joint">
-    <hardwareInterface>EffortJointInterface</hardwareInterface>
+    <hardwareInterface>PositionJointInterface</hardwareInterface>
   </joint>
   <actuator name="cameraMotor">
-    <hardwareInterface>EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
 </transmission>
