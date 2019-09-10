@@ -28,13 +28,14 @@
   <!-- spawn right goal -->
   <node name="spawn_rpost" pkg="gazebo_ros" type="spawn_model" args="-file $(find gazebo_models)/models/robocup_3Dsim_goal/model.sdf -sdf -x 4.5 -model rpost" />
 
- <rosparam file="$(find gazebo_models)/config/mybot_control.yaml" command="load"/>
-    <param name="robot_description"
-	 command="$(find xacro)/xacro.py '$(find gazebo_models)/models/mybot/mybot.xacro'" />
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
-        args="-urdf -model mybot -param robot_description -x 0 -y 0 -z 0"/> 
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find gazebo_models)/models/mybot/mybot.xacro'" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model mybot -param robot_description -x 0 -y 0 -z 0"/> 
+
+  <rosparam file="$(find gazebo_models)/config/joints.yaml" command="load" ns="mybot_joint_state_controller"/>
+  <rosparam command="load" file="$(find gazebo_models)/config/head.yaml" ns="mybot_head_controller" />
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" args="mybot_joint_state_controller mybot_head_controller" />
 
   <!--node pkg="rviz" type="rviz" name="rviz" args="-d $(find gazebo_models)/gazebo.rviz" output="screen"/--> 
 </launch>
