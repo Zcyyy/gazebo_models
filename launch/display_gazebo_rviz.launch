@@ -36,5 +36,5 @@
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
         args="-urdf -model mybot -param robot_description -x 0 -y 0 -z 0"/> 
 
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find gazebo_models)/gazebo.rviz" output="screen"/> 
+  <!--node pkg="rviz" type="rviz" name="rviz" args="-d $(find gazebo_models)/gazebo.rviz" output="screen"/--> 
 </launch>
