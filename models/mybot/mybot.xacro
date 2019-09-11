@@ -74,6 +74,8 @@
     <sphere_inertia m="${casterMass}" r="${casterRadius}"/>
   </inertial>
 </link>
+
+
 <link name="mybot_left_wheel">
   <collision>
     <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />

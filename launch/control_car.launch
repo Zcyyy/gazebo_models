@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="image_convertor" pkg="gazebo_models" type="show_img.py" />
+  <node name="car_vel_changer" pkg="gazebo_models" type="car_movement.py" />
+
+</launch>

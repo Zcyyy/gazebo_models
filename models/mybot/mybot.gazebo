@@ -2,6 +2,12 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/</robotNamespace>
+  </plugin>
+</gazebo>
+
+<gazebo>
   <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
     <robotNamespace>/</robotNamespace>
     <alwaysOn>true</alwaysOn>
@@ -55,41 +61,34 @@
 
 
 <!-- camera -->
-    <gazebo reference="camera_link">
-      <sensor type="depth" name="camera">
-        <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>camera</cameraName>
-          <alwaysOn>true</alwaysOn>
-          <updateRate>10</updateRate>
-          <imageTopicName>rgb/image_raw</imageTopicName>
-          <depthImageTopicName>depth/image_raw</depthImageTopicName>
-          <pointCloudTopicName>depth/points</pointCloudTopicName>
-          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_link_optical</frameName>
-          <baseline>0.1</baseline>
-          <distortion_k1>0.0</distortion_k1>
-          <distortion_k2>0.0</distortion_k2>
-          <distortion_k3>0.0</distortion_k3>
-          <distortion_t1>0.0</distortion_t1>
-          <distortion_t2>0.0</distortion_t2>
-          <pointCloudCutoff>0.4</pointCloudCutoff>
-        </plugin>
-      </sensor>
-    </gazebo>
-
-  <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/mybot</robotNamespace>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+<gazebo reference="camera_link">
+  <sensor type="depth" name="camera">
+    <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+      <cameraName>camera</cameraName>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>10</updateRate>
+      <imageTopicName>rgb/image_raw</imageTopicName>
+      <depthImageTopicName>depth/image_raw</depthImageTopicName>
+      <pointCloudTopicName>depth/points</pointCloudTopicName>
+      <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+      <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+      <frameName>camera_link_optical</frameName>
+      <baseline>0.1</baseline>
+      <distortion_k1>0.0</distortion_k1>
+      <distortion_k2>0.0</distortion_k2>
+      <distortion_k3>0.0</distortion_k3>
+      <distortion_t1>0.0</distortion_t1>
+      <distortion_t2>0.0</distortion_t2>
+      <pointCloudCutoff>0.4</pointCloudCutoff>
     </plugin>
-  </gazebo>
+  </sensor>
+</gazebo>
 
-  <gazebo reference="base_link">
-    <mu>0</mu>
-    <mu2>0</mu2>
-    <kp>100000000.0</kp>
-    <kd>10000.0</kd>
-  </gazebo>
+<gazebo reference="base_link">
+  <mu>0</mu>
+  <mu2>0</mu2>
+  <kp>100000000.0</kp>
+  <kd>10000.0</kd>
+</gazebo>
 
 </robot>
